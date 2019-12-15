@@ -46,48 +46,12 @@ export const constantRoutes = [
   {
     path: '/',
     component: Layout,
-    redirect: '/index',
+    redirect: '/dashboard',
     children: [{
-      path: 'index',
-      name: 'index',
-      component: () => import('@/views/index/index'),
-      meta: { title: '首页', icon: 'index' }
-    }]
-  },
-  {
-    path: '/purchase',
-    component: Layout,
-    redirect: '/purchase/create',
-    meta: { title: '购入统计', icon: 'purchase' },
-    children: [{
-      path: 'create',
-      name: 'create',
-      component: () => import('@/views/purchase/create/index'),
-      meta: { title: '新增', icon: 'create' }
-    },
-    {
-      path: 'see',
-      name: 'see',
-      component: () => import('@/views/purchase/see/index'),
-      meta: { title: '查看', icon: 'see' }
-    }]
-  },
-  {
-    path: '/sell',
-    component: Layout,
-    redirect: '/sell/create',
-    meta: { title: '出售统计', icon: 'sell' },
-    children: [{
-      path: 'create',
-      name: 'create',
-      component: () => import('@/views/sell/create/index'),
-      meta: { title: '新增', icon: 'create' }
-    },
-    {
-      path: 'see',
-      name: 'see',
-      component: () => import('@/views/sell/see/index'),
-      meta: { title: '查看', icon: 'see' }
+      path: 'dashboard',
+      name: 'Dashboard',
+      component: () => import('@/views/dashboard/index'),
+      meta: { title: 'Dashboard', icon: 'dashboard' }
     }]
   },
 
