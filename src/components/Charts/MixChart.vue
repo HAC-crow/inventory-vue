@@ -198,15 +198,7 @@ export default {
                 }
               }
             },
-            data: [
-              327,
-              1776,
-              507,
-              1200,
-              800,
-              482,
-              204
-            ]
+            data: response.data.sellData
           }, {
             name: '利润',
             type: 'line',
@@ -226,15 +218,7 @@ export default {
                 }
               }
             },
-            data: [
-              1036,
-              3693,
-              2962,
-              3810,
-              2519,
-              1915,
-              1748
-            ]
+            data: response.data.profitData
           }
           ]
         })

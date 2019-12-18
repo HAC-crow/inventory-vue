@@ -8,9 +8,9 @@
       <el-button v-waves class="filter-item" type="primary" icon="el-icon-search" @click="handleFilter">
         查询
       </el-button>
-      <!-- <el-button v-waves :loading="downloadLoading" class="filter-item" type="primary" icon="el-icon-download" @click="handleDownload">
-        导出Excel
-      </el-button> -->
+      <el-button class="filter-item" style="margin-left: 10px;" type="primary" icon="el-icon-edit" @click="handleCreate">
+        新增
+      </el-button>
     </div>
 
     <el-table
@@ -66,7 +66,7 @@
           {{ scope.row.createdAt }}
         </template>
       </el-table-column>
-      <el-table-column label="操作" width="200">
+      <el-table-column label="操作" align="center" width="200">
         <template slot-scope="scope">
           <el-button type="primary" size="mini" @click="handleUpdate(scope.row)">编辑</el-button>
           <el-button size="mini" type="danger" @click="deleteById(scope.row.id)">删除</el-button>
@@ -105,10 +105,10 @@
       </el-form>
       <div slot="footer" class="dialog-footer">
         <el-button @click="dialogFormVisible = false">
-          Cancel
+          取消
         </el-button>
         <el-button type="primary" @click="dialogStatus==='create'?createData():updateData()">
-          Confirm
+          提交
         </el-button>
       </div>
     </el-dialog>
@@ -116,7 +116,7 @@
 </template>
 
 <script>
-import { getList, deleteById, update } from '@/api/get'
+import { getList, deleteById, update, create } from '@/api/get'
 import Pagination from '@/components/Pagination'
 import waves from '@/directive/waves' // waves directive
 
@@ -149,8 +149,8 @@ export default {
       dialogFormVisible: false,
       dialogStatus: '',
       textMap: {
-        update: 'Edit',
-        create: 'Create'
+        update: '修改',
+        create: '添加'
       },
       list: null,
       listLoading: true,
@@ -178,6 +178,30 @@ export default {
     handleFilter() {
       this.listQuery.page = 1
       this.fetchData()
+    },
+    handleCreate() {
+      this.dialogStatus = 'create'
+      this.dialogFormVisible = true
+      this.$nextTick(() => {
+        this.$refs['dataForm'].clearValidate()
+      })
+    },
+    createData() {
+      this.$refs['dataForm'].validate((valid) => {
+        if (valid) {
+          const tempData = Object.assign({}, this.form)
+          create(tempData).then(response => {
+            this.result = response.data
+            if (this.result === true) {
+              this.$message('添加成功!')
+              this.fetchData()
+              this.dialogFormVisible = false
+            } else {
+              this.$message('添加失败，请联系管理员!')
+            }
+          })
+        }
+      })
     },
     handleUpdate(row) {
       this.form = Object.assign({}, row) // copy obj
